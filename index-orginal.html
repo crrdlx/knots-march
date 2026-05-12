@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <title>Knotzi Death March Countdown</title>
+    <meta name="keywords" content="bitcoin, confirmation, risk, security" />
+    <meta name="Robots" content="index,follow" />
+    <meta name="description" content="A BIP-110 Countdown Clock." />
+
+    <meta name="twitter:title" content="Knotzi Death March Countdown" />
+    <meta name="twitter:description" content="A BIP-110 Countdown Clock." />
+  </head>
+  <body>
+    <div class="container">
+    <h1 class="text-center">Knotzi Death March Countdown</h1>
+    <hr/>
+    <div class="row">
+      <div class="col-md-12">
+          <div>
+            <div class="col-sm-2">
+            </div>
+            <div class="col-sm-10">
+              <p>This countdown timer tracks how long it will be before users who run BIP-110 nodes have before they will be forked off the Bitcoin network.<br/>
+              For background info, see <a href="https://blog.lopp.net/a-laymans-guide-to-bip-110/">A Layman's Guide to BIP-110</a> and <a href="https://blog.lopp.net/knot-a-serious-project/">It's Knot a Serious Project</a></p>
+            </div>
+          </div>
+          <div>
+            <label class="col-sm-2"></label>
+            <div class="col-sm-10">
+              <h4 style="color:red;font-weight:bold" id="blocksremaining"></h4>
+            </div>
+          </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div>
+          <hr/>
+          <div class="col-sm-2">
+          </div>
+          <div class="col-sm-10">
+            <h2>This tool is 100% open source code</h2>
+            <p>
+              <span>The Knotzi Death March Countdown can be found at </span>
+              <a href="https://github.com/jlopp/knotzi-death-march" target="_blank">
+              https://github.com/jlopp/knotzi-death-march
+              </a>
+            </p>
+            <h3>Libraries</h3>
+            <p>
+              <span>Twitter Bootstrap: </span>
+              <a href="http://getbootstrap.com/" target="_blank">
+              http://getbootstrap.com/
+              </a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      // get the latest chain tip block height
+      var Httpreq = new XMLHttpRequest(); // a new request
+      Httpreq.open("GET","https://mempool.space/api/blocks/tip/height",false);
+      Httpreq.send(null);
+      var currentHeight = Httpreq.responseText;
+      var blocksRemaining = 961632 - currentHeight;
+
+      if (blocksRemaining > 0) {
+        var minutesRemaining = blocksRemaining * 10;
+        const minutesInHour = 60;
+        const minutesInDay = 24 * minutesInHour;
+        const minutesInMonth = 30 * minutesInDay; // assumes 1 month = 30 days
+
+        const months = Math.floor(minutesRemaining / minutesInMonth);
+        minutesRemaining %= minutesInMonth;
+
+        const days = Math.floor(minutesRemaining / minutesInDay);
+        minutesRemaining %= minutesInDay;
+
+        const hours = Math.floor(minutesRemaining / minutesInHour);
+        const minutes = minutesRemaining % minutesInHour;
+        document.getElementById('blocksremaining').innerHTML = "T-minus " + blocksRemaining.toLocaleString()
+          + " blocks remaining.<br/><br/>"
+          + "Approximately " + months + " months, " + days + " days, " + hours + " hours, and " + minutes + " minutes.";
+      } else {
+        document.getElementById('blocksremaining').innerHTML = "GAME OVER";
+      }
+    </script>
+  </body>
+</html>
