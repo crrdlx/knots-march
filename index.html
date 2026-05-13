@@ -206,6 +206,14 @@
             margin-top: 0.4rem;
         }
 
+        .til-midnight-actual {
+            font-family: 'Barlow', sans-serif;
+            font-size: 0.82rem;
+            font-weight: 400;
+            color: var(--muted);
+            margin-top: 0.5rem;
+        }
+
         /* ── CLOCK ── */
         .clock-wrap {
             display: flex;
@@ -446,8 +454,9 @@
 
             <!-- TIL MIDNIGHT BANNER -->
             <div class="til-midnight">
-                <div class="til-midnight-main">It is <em id="til-value">—</em> to midnight</div>
+                <div class="til-midnight-main">It is <em>12 minutes</em> to midnight</div>
                 <div class="til-midnight-sub">To the Bitcoin fork</div>
+                <div class="til-midnight-actual">Approximately <span id="til-value">—</span></div>
             </div>
 
             <!-- CLOCK FACE -->
@@ -470,18 +479,19 @@
                         fill="#111111">9</text>
                     <text x="140" y="56" text-anchor="middle" font-family="'Barlow Condensed', sans-serif"
                         font-weight="600" font-size="5.5" fill="#888888" letter-spacing="2.5">MIDNIGHT</text>
-                    <line id="hour-hand" x1="140" y1="140" x2="140" y2="72" stroke="#111111" stroke-width="8"
-                        stroke-linecap="butt" />
-                    <line id="hour-tail" x1="140" y1="140" x2="140" y2="158" stroke="#111111" stroke-width="8"
-                        stroke-linecap="butt" />
-                    <line id="minute-hand" x1="140" y1="140" x2="140" y2="24" stroke="#111111" stroke-width="4"
-                        stroke-linecap="butt" />
-                    <line id="minute-tail" x1="140" y1="140" x2="140" y2="168" stroke="#111111" stroke-width="4"
-                        stroke-linecap="butt" />
-                    <line id="red-line" x1="140" y1="140" x2="140" y2="24" stroke="#b82020" stroke-width="1.5"
-                        stroke-linecap="butt" opacity="0.65" />
-                    <line id="red-tail" x1="140" y1="140" x2="140" y2="168" stroke="#b82020" stroke-width="1.5"
-                        stroke-linecap="butt" opacity="0.65" />
+                    <!-- Hands pre-set to 11:48 (288°) so clock is correct before JS runs.
+                         288°: sin=-0.9511, cos=0.3090
+                         Minute tip:  cx + sin*114 = 140-108.4 = 31.6,  cy - cos*114 = 140-35.2 = 104.8
+                         Minute tail: cx - sin*28  = 140+26.6  = 166.6, cy + cos*28  = 140+8.7  = 148.7
+                         Hour at 322°: sin=-0.6157, cos=0.7880
+                         Hour tip:  cx + sin*68 = 140-41.9 = 98.1,  cy - cos*68 = 140-53.6 = 86.4
+                         Hour tail: cx - sin*18 = 140+11.1 = 151.1, cy + cos*18 = 140+14.2 = 154.2  -->
+                    <line id="hour-hand"   x1="140" y1="140" x2="130.5" y2="72.6"  stroke="#111111" stroke-width="8"   stroke-linecap="butt"/>
+                    <line id="hour-tail"   x1="140" y1="140" x2="142.5" y2="157.8" stroke="#111111" stroke-width="8"   stroke-linecap="butt"/>
+                    <line id="minute-hand" x1="140" y1="140" x2="31.6"  y2="104.8" stroke="#111111" stroke-width="4"   stroke-linecap="butt"/>
+                    <line id="minute-tail" x1="140" y1="140" x2="166.6" y2="148.7" stroke="#111111" stroke-width="4"   stroke-linecap="butt"/>
+                    <line id="red-line"    x1="140" y1="140" x2="31.6"  y2="104.8" stroke="#b82020" stroke-width="1.5" stroke-linecap="butt" opacity="0.65"/>
+                    <line id="red-tail"    x1="140" y1="140" x2="166.6" y2="148.7" stroke="#b82020" stroke-width="1.5" stroke-linecap="butt" opacity="0.65"/>
                     <circle cx="140" cy="140" r="9" fill="#f0ece0" stroke="#111111" stroke-width="2.5" />
                     <circle cx="140" cy="140" r="3.5" fill="#111111" />
                 </svg>
@@ -568,8 +578,10 @@
         function setClockHands(pct) {
             const cx = 140, cy = 140;
             const p = Math.max(0, Math.min(1, pct));
-            const minAngle = (330 + p * 30) * Math.PI / 180;
-            const hourAngle = (325 + p * 35) * Math.PI / 180;
+            // 288° = 11:48 (12 min to midnight), sweeps to 360° (midnight)
+            const minAngle  = (288 + p * 72) * Math.PI / 180;
+            // Hour hand: starts at 11:00 (352°), converges to 360° at fork
+            const hourAngle = (352 + p * 8) * Math.PI / 180;
 
             function placeHand(tipId, tailId, rad, tipLen, tailLen) {
                 const s = Math.sin(rad), c = Math.cos(rad);
@@ -613,21 +625,15 @@
                     const hours = Math.floor((totalMins % 1440) / 60);
                     const mins = totalMins % 60;
 
-                    let tilVal;
-                    if (months >= 2) tilVal = months + ' months';
-                    else if (months === 1) tilVal = '1 month, ' + days + ' days';
-                    else if (days >= 2) tilVal = days + ' days';
-                    else if (days === 1) tilVal = '1 day, ' + hours + ' hours';
-                    else if (hours >= 1) tilVal = hours + (hours === 1 ? ' hour' : ' hours');
-                    else tilVal = mins + ' minutes';
-                    document.getElementById('til-value').innerText = tilVal;
-
+                    // Build full actual time string for both til-value and time-string
                     const parts = [];
                     if (months > 0) parts.push(months + (months === 1 ? ' month' : ' months'));
-                    if (days > 0) parts.push(days + (days === 1 ? ' day' : ' days'));
-                    if (hours > 0) parts.push(hours + (hours === 1 ? ' hour' : ' hours'));
-                    if (mins > 0 && months === 0) parts.push(mins + ' minutes');
-                    document.getElementById('time-string').innerText = parts.join(', ');
+                    if (days   > 0) parts.push(days   + (days   === 1 ? ' day'   : ' days'));
+                    if (hours  > 0) parts.push(hours  + (hours  === 1 ? ' hour'  : ' hours'));
+                    if (mins   > 0 && months === 0) parts.push(mins + ' minutes');
+                    const actualTime = parts.join(', ');
+                    document.getElementById('til-value').innerText  = actualTime;
+                    document.getElementById('time-string').innerText = actualTime;
 
                     document.getElementById('doom-fill').style.width = (pct * 100).toFixed(1) + '%';
                     document.getElementById('percent-text').innerText = Math.round(pct * 100) + '%';
@@ -636,7 +642,7 @@
 
                 } else {
                     document.getElementById('blocks-display').innerText = '0';
-                    document.getElementById('til-value').innerText = '0 seconds';
+                    document.getElementById('til-value').innerText      = 'now — it has arrived';
                     document.getElementById('time-string').innerText = 'The fork has occurred. Midnight.';
                     document.getElementById('doom-fill').style.width = '100%';
                     document.getElementById('percent-text').innerText = '100%';
@@ -648,7 +654,7 @@
             }
         }
 
-        setClockHands(0.85);
+        setClockHands(0);
         updateCountdown();
         setInterval(updateCountdown, 60000);
     </script>
