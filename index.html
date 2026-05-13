@@ -4,12 +4,15 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
     <title>Knotzi Death March Countdown</title>
+
     <link
         href="https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;600;700&family=Barlow+Condensed:wght@300;400;600;700&display=swap"
         rel="stylesheet">
+
     <style>
-        /* ── LIGHT THEME (default) ── */
+
         :root,
         [data-theme="light"] {
             --face: #f0ece0;
@@ -22,13 +25,11 @@
             --link: #2a6a96;
             --headline: #1a1814;
             --til-bg: #ede9df;
-            --til-em: #8a5a0a;
+            --til-em: #b07a14;
             --track-bg: #d4cfc2;
-            --fill-color: #2a2520;
-            --toggle-icon: "☀︎";
+            --fill-color: #111111;
         }
 
-        /* ── DARK THEME ── */
         [data-theme="dark"] {
             --face: #f0ece0;
             --face-ring: #c8c0a8;
@@ -43,7 +44,6 @@
             --til-em: #e8c87a;
             --track-bg: #222222;
             --fill-color: #f0ece0;
-            --toggle-icon: "☾";
         }
 
         * {
@@ -59,17 +59,15 @@
             display: flex;
             justify-content: center;
             font-family: 'Barlow', sans-serif;
-            font-weight: 400;
             padding: 3rem 1.25rem;
             transition: background 0.3s, color 0.3s;
         }
 
         .page {
-            max-width: 520px;
+            max-width: 540px;
             width: 100%;
         }
 
-        /* ── TOGGLE BUTTON ── */
         .theme-toggle {
             position: fixed;
             top: 1.25rem;
@@ -82,18 +80,10 @@
             font-weight: 600;
             letter-spacing: 0.15em;
             text-transform: uppercase;
-            padding: 0.4rem 0.85rem;
+            padding: 0.45rem 0.85rem;
             cursor: pointer;
-            transition: background 0.3s, border-color 0.3s, color 0.2s;
-            z-index: 100;
         }
 
-        .theme-toggle:hover {
-            color: var(--text);
-            border-color: var(--muted);
-        }
-
-        /* ── MASTHEAD ── */
         .masthead {
             text-align: center;
             margin-bottom: 2.5rem;
@@ -101,8 +91,8 @@
 
         .masthead-eyebrow {
             font-family: 'Barlow Condensed', sans-serif;
-            font-weight: 600;
             font-size: 0.75rem;
+            font-weight: 600;
             letter-spacing: 0.25em;
             text-transform: uppercase;
             color: var(--muted);
@@ -111,164 +101,61 @@
 
         .masthead-title {
             font-family: 'Barlow Condensed', sans-serif;
-            font-weight: 300;
             font-size: 1rem;
+            font-weight: 300;
             letter-spacing: 0.15em;
             text-transform: uppercase;
-            color: var(--text);
         }
 
-        /* ── PANEL ── */
         .panel {
             background: var(--panel);
             border: 1px solid var(--border);
             padding: 2.5rem 2rem;
-            transition: background 0.3s, border-color 0.3s;
         }
 
         .headline {
             font-family: 'Barlow Condensed', sans-serif;
-            font-weight: 700;
             font-size: 3rem;
+            font-weight: 700;
             line-height: 1.05;
-            letter-spacing: 0.01em;
             text-transform: uppercase;
-            color: var(--headline);
+            text-align: center;
             margin-bottom: 0.5rem;
         }
 
-        .sub-tag {
-            font-family: 'Barlow Condensed', sans-serif;
-            font-weight: 400;
-            font-size: 0.8rem;
-            letter-spacing: 0.2em;
-            text-transform: uppercase;
-            color: var(--muted);
-            margin-bottom: 1.5rem;
-        }
-
-        .intro-text {
-            font-size: 1rem;
-            font-weight: 400;
-            color: var(--text);
-            line-height: 1.7;
-            margin-bottom: 0.75rem;
-        }
-
-        .bg-links {
-            font-size: 0.85rem;
-            color: var(--muted);
-            line-height: 1.6;
-            margin-bottom: 2rem;
-        }
-
-        .bg-links a {
-            color: var(--link);
-            text-decoration: none;
-        }
-
-        .bg-links a:hover {
-            text-decoration: underline;
-        }
-
-        /* ── TIL MIDNIGHT BANNER ── */
-        .til-midnight {
-            text-align: center;
-            border: 1px solid var(--border);
-            padding: 1.1rem 1.5rem 1rem;
-            margin-bottom: 2rem;
-            background: var(--til-bg);
-            transition: background 0.3s, border-color 0.3s;
-        }
-
-        .til-midnight-main {
-            font-family: 'Barlow Condensed', sans-serif;
-            font-weight: 700;
-            font-size: 1.6rem;
-            letter-spacing: 0.04em;
-            text-transform: uppercase;
-            color: var(--text);
-            line-height: 1.15;
-        }
-
-        .til-midnight-main em {
-            font-style: normal;
+        .headline em {
             color: var(--til-em);
+            font-style: normal;
         }
 
-        .til-midnight-sub {
+        .sub-tag {
+            text-align: center;
             font-family: 'Barlow Condensed', sans-serif;
-            font-size: 0.7rem;
-            font-weight: 600;
+            font-size: 0.8rem;
             letter-spacing: 0.3em;
             text-transform: uppercase;
             color: var(--muted);
-            margin-top: 0.4rem;
+            margin-bottom: 1.25rem;
         }
 
         .til-midnight-actual {
-            font-family: 'Barlow', sans-serif;
-            font-size: 0.82rem;
-            font-weight: 400;
+            text-align: center;
             color: var(--muted);
-            margin-top: 0.5rem;
+            margin-bottom: 2rem;
+            font-size: 0.95rem;
         }
 
-        /* ── CLOCK ── */
         .clock-wrap {
             display: flex;
             justify-content: center;
-            margin: 0 0 2.5rem;
+            margin-bottom: 2.5rem;
         }
 
         .clock-svg {
-            width: 280px;
-            height: 280px;
-            overflow: visible;
+            width: 300px;
+            height: 300px;
         }
 
-        @keyframes minute-tick {
-
-            0%,
-            94% {
-                opacity: 1;
-            }
-
-            95%,
-            99% {
-                opacity: 0.55;
-            }
-
-            100% {
-                opacity: 1;
-            }
-        }
-
-        #minute-hand {
-            animation: minute-tick 5s infinite;
-        }
-
-        #red-line {
-            animation: minute-tick 5s infinite;
-        }
-
-        @keyframes clock-glow {
-
-            0%,
-            100% {
-                filter: drop-shadow(0 0 2px rgba(200, 120, 32, 0.03));
-            }
-
-            50% {
-                filter: drop-shadow(0 0 6px #e8941a) drop-shadow(0 0 14px rgba(232, 148, 26, 0.31));
-            }
-        }
-
-        .clock-svg {
-            animation: clock-glow 3s ease-in-out infinite;
-        }
-
-        /* ── BLOCK COUNTER ── */
         .counter-block {
             text-align: center;
             margin-bottom: 2rem;
@@ -276,59 +163,53 @@
 
         .counter-eyebrow {
             font-family: 'Barlow Condensed', sans-serif;
-            font-size: 0.75rem;
+            font-size: 0.8rem;
             font-weight: 600;
             letter-spacing: 0.25em;
             text-transform: uppercase;
             color: var(--muted);
-            margin-bottom: 0.4rem;
+            margin-bottom: 0.75rem;
         }
 
         .counter-number {
             font-family: 'Barlow Condensed', sans-serif;
+            font-size: 4.5rem;
             font-weight: 700;
-            font-size: 3.6rem;
-            letter-spacing: -0.01em;
-            color: var(--headline);
             line-height: 1;
         }
 
         .counter-unit {
             font-family: 'Barlow Condensed', sans-serif;
-            font-size: 0.8rem;
+            font-size: 0.85rem;
             font-weight: 600;
-            letter-spacing: 0.2em;
+            letter-spacing: 0.25em;
             text-transform: uppercase;
             color: var(--muted);
-            margin-top: 0.3rem;
+            margin-top: 0.4rem;
         }
 
-        /* ── ESTIMATE ── */
         .estimate-block {
-            font-weight: 300;
-            font-size: 0.92rem;
-            color: var(--text);
             text-align: center;
-            line-height: 1.7;
-            border-top: 1px solid var(--border);
-            border-bottom: 1px solid var(--border);
-            padding: 1.1rem 1rem;
+            border: 1px solid var(--border);
+            padding: 1.2rem;
             margin-bottom: 2rem;
-            transition: border-color 0.3s;
         }
 
         .estimate-label {
+            display: block;
             font-family: 'Barlow Condensed', sans-serif;
-            font-size: 0.75rem;
+            font-size: 0.8rem;
             font-weight: 600;
-            letter-spacing: 0.2em;
+            letter-spacing: 0.25em;
             text-transform: uppercase;
             color: var(--muted);
-            display: block;
-            margin-bottom: 0.3rem;
+            margin-bottom: 0.5rem;
         }
 
-        /* ── PROGRESS ── */
+        .estimate-time {
+            font-size: 1rem;
+        }
+
         .progress-section {
             margin-bottom: 2rem;
         }
@@ -336,7 +217,6 @@
         .progress-row {
             display: flex;
             justify-content: space-between;
-            align-items: baseline;
             margin-bottom: 0.5rem;
         }
 
@@ -344,68 +224,45 @@
             font-family: 'Barlow Condensed', sans-serif;
             font-size: 0.8rem;
             font-weight: 600;
-            letter-spacing: 0.15em;
+            letter-spacing: 0.18em;
             text-transform: uppercase;
             color: var(--muted);
         }
 
-        .progress-row .pct {
-            font-size: 0.9rem;
-            font-weight: 700;
-            color: var(--text);
-        }
-
         .track {
             width: 100%;
-            height: 5px;
+            height: 6px;
             background: var(--track-bg);
             border: 1px solid var(--border);
-            transition: background 0.3s, border-color 0.3s;
-        }
-
-        @keyframes bar-glow {
-
-            0%,
-            100% {
-                box-shadow: 0 0 2px rgba(200, 120, 32, 0.03);
-            }
-
-            50% {
-                box-shadow: 0 0 6px #e8941a, 0 0 14px rgba(232, 148, 26, 0.31);
-            }
         }
 
         .fill {
             height: 100%;
             background: var(--fill-color);
-            transition: width 1s ease-in-out, background 0.3s;
-            animation: bar-glow 3s ease-in-out infinite;
+            transition: width 1s ease;
         }
 
         .track-labels {
             display: flex;
             justify-content: space-between;
-            margin-top: 0.4rem;
+            margin-top: 0.5rem;
         }
 
         .track-labels span {
             font-family: 'Barlow Condensed', sans-serif;
             font-size: 0.72rem;
             font-weight: 600;
-            letter-spacing: 0.1em;
+            letter-spacing: 0.12em;
             color: var(--muted);
         }
 
-        /* ── FOOTER ── */
         .footer {
             border-top: 1px solid var(--border);
             padding-top: 1.5rem;
-            font-family: 'Barlow Condensed', sans-serif;
-            font-size: 0.82rem;
-            font-weight: 400;
-            letter-spacing: 0.05em;
+            text-align: center;
+            font-size: 0.9rem;
             color: var(--muted);
-            transition: border-color 0.3s;
+            line-height: 1.7;
         }
 
         .footer a {
@@ -413,251 +270,578 @@
             text-decoration: none;
         }
 
-        .footer a:hover {
-            text-decoration: underline;
-        }
-
-        .footer strong {
-            color: var(--text);
-        }
     </style>
 </head>
 
 <body>
 
-    <button class="theme-toggle" id="theme-btn" onclick="toggleTheme()" aria-label="Toggle dark mode">
-        ☀︎ &nbsp;Light
+    <button class="theme-toggle" id="theme-btn" onclick="toggleTheme()">
+        ☀︎ Light
     </button>
 
     <div class="page">
 
         <div class="masthead">
-            <p class="masthead-eyebrow">Bulletin of the Bitcoin Scientists</p>
-            <p class="masthead-title">Knotzi Death March Countdown</p>
+            <div class="masthead-eyebrow">
+                Bulletin of the Bitcoin Scientists
+            </div>
+
+            <div class="masthead-title">
+                Knotzi Death March Countdown
+            </div>
         </div>
 
         <div class="panel">
 
-            <h1 class="headline">Knotzi Death March Countdown</h1>
-            <p class="sub-tag">BIP-110 Network Tracking</p>
+            <h1 class="headline" id="doom-headline">
+                IT IS <em>12 MINUTES</em> TO MIDNIGHT
+            </h1>
 
-            <p class="intro-text">
-                This countdown timer tracks how long it will be before users who run BIP-110 nodes will be forked off
-                the Bitcoin network.
-            </p>
-
-            <p class="bg-links">
-                For background info, see <a href="https://blog.lopp.net/a-laymans-guide-to-bip-110/">A Layman's Guide to
-                    BIP-110</a> and <a href="https://blog.lopp.net/knot-a-serious-project/">It's Knot a Serious
-                    Project</a>.
-            </p>
-
-            <!-- TIL MIDNIGHT BANNER -->
-            <div class="til-midnight">
-                <div class="til-midnight-main">It is <em>12 minutes</em> to midnight</div>
-                <div class="til-midnight-sub">To the Bitcoin fork</div>
-                <div class="til-midnight-actual">Approximately <span id="til-value">—</span></div>
+            <div class="sub-tag">
+                TO THE BITCOIN FORK
             </div>
 
-            <!-- CLOCK FACE -->
+            <div class="til-midnight-actual">
+                Approximately <span id="til-value">—</span>
+            </div>
+
             <div class="clock-wrap">
-                <svg class="clock-svg" viewBox="0 0 280 280" xmlns="http://www.w3.org/2000/svg">
-                    <circle id="clock-face-ring" cx="140" cy="140" r="128" fill="#f0ece0" stroke="#c8c0a8"
+
+                <svg class="clock-svg"
+                    viewBox="0 0 280 280"
+                    xmlns="http://www.w3.org/2000/svg">
+
+                    <circle
+                        cx="140"
+                        cy="140"
+                        r="128"
+                        fill="#f0ece0"
+                        stroke="#c8c0a8"
                         stroke-width="2" />
-                    <circle cx="140" cy="140" r="121" fill="none" stroke="#c8c0a8" stroke-width="0.75" opacity="0.6" />
+
+                    <circle
+                        cx="140"
+                        cy="140"
+                        r="121"
+                        fill="none"
+                        stroke="#c8c0a8"
+                        stroke-width="0.75"
+                        opacity="0.6" />
+
                     <g id="ticks"></g>
-                    <text x="140" y="37" text-anchor="middle" dominant-baseline="auto"
-                        font-family="'Barlow Condensed', sans-serif" font-weight="700" font-size="14" fill="#111111"
-                        letter-spacing="0.03em">12</text>
-                    <text x="248" y="145" text-anchor="middle" dominant-baseline="central"
-                        font-family="'Barlow Condensed', sans-serif" font-weight="700" font-size="14"
+
+                    <text x="140" y="37"
+                        text-anchor="middle"
+                        font-family="'Barlow Condensed', sans-serif"
+                        font-weight="700"
+                        font-size="14"
+                        fill="#111111">12</text>
+
+                    <text x="248" y="145"
+                        text-anchor="middle"
+                        font-family="'Barlow Condensed', sans-serif"
+                        font-weight="700"
+                        font-size="14"
                         fill="#111111">3</text>
-                    <text x="140" y="253" text-anchor="middle" font-family="'Barlow Condensed', sans-serif"
-                        font-weight="700" font-size="14" fill="#111111">6</text>
-                    <text x="32" y="145" text-anchor="middle" dominant-baseline="central"
-                        font-family="'Barlow Condensed', sans-serif" font-weight="700" font-size="14"
+
+                    <text x="140" y="253"
+                        text-anchor="middle"
+                        font-family="'Barlow Condensed', sans-serif"
+                        font-weight="700"
+                        font-size="14"
+                        fill="#111111">6</text>
+
+                    <text x="32" y="145"
+                        text-anchor="middle"
+                        font-family="'Barlow Condensed', sans-serif"
+                        font-weight="700"
+                        font-size="14"
                         fill="#111111">9</text>
-                    <text x="140" y="56" text-anchor="middle" font-family="'Barlow Condensed', sans-serif"
-                        font-weight="600" font-size="5.5" fill="#888888" letter-spacing="2.5">MIDNIGHT</text>
-                    <!-- Hands pre-set to 11:48 (288°) so clock is correct before JS runs.
-                         288°: sin=-0.9511, cos=0.3090
-                         Minute tip:  cx + sin*114 = 140-108.4 = 31.6,  cy - cos*114 = 140-35.2 = 104.8
-                         Minute tail: cx - sin*28  = 140+26.6  = 166.6, cy + cos*28  = 140+8.7  = 148.7
-                         Hour at 322°: sin=-0.6157, cos=0.7880
-                         Hour tip:  cx + sin*68 = 140-41.9 = 98.1,  cy - cos*68 = 140-53.6 = 86.4
-                         Hour tail: cx - sin*18 = 140+11.1 = 151.1, cy + cos*18 = 140+14.2 = 154.2  -->
-                    <line id="hour-hand"   x1="140" y1="140" x2="130.5" y2="72.6"  stroke="#111111" stroke-width="8"   stroke-linecap="butt"/>
-                    <line id="hour-tail"   x1="140" y1="140" x2="142.5" y2="157.8" stroke="#111111" stroke-width="8"   stroke-linecap="butt"/>
-                    <line id="minute-hand" x1="140" y1="140" x2="31.6"  y2="104.8" stroke="#111111" stroke-width="4"   stroke-linecap="butt"/>
-                    <line id="minute-tail" x1="140" y1="140" x2="166.6" y2="148.7" stroke="#111111" stroke-width="4"   stroke-linecap="butt"/>
-                    <line id="red-line"    x1="140" y1="140" x2="31.6"  y2="104.8" stroke="#b82020" stroke-width="1.5" stroke-linecap="butt" opacity="0.65"/>
-                    <line id="red-tail"    x1="140" y1="140" x2="166.6" y2="148.7" stroke="#b82020" stroke-width="1.5" stroke-linecap="butt" opacity="0.65"/>
-                    <circle cx="140" cy="140" r="9" fill="#f0ece0" stroke="#111111" stroke-width="2.5" />
-                    <circle cx="140" cy="140" r="3.5" fill="#111111" />
+
+                    <line id="hour-hand"
+                        x1="140" y1="140"
+                        x2="140" y2="90"
+                        stroke="#111111"
+                        stroke-width="8" />
+
+                    <line id="hour-tail"
+                        x1="140" y1="140"
+                        x2="140" y2="158"
+                        stroke="#111111"
+                        stroke-width="8" />
+
+                    <line id="minute-hand"
+                        x1="140" y1="140"
+                        x2="140" y2="40"
+                        stroke="#111111"
+                        stroke-width="4" />
+
+                    <line id="minute-tail"
+                        x1="140" y1="140"
+                        x2="140" y2="168"
+                        stroke="#111111"
+                        stroke-width="4" />
+
+                    <line id="red-line"
+                        x1="140" y1="140"
+                        x2="140" y2="40"
+                        stroke="#b82020"
+                        stroke-width="1.5"
+                        opacity="0.7" />
+
+                    <line id="red-tail"
+                        x1="140" y1="140"
+                        x2="140" y2="168"
+                        stroke="#b82020"
+                        stroke-width="1.5"
+                        opacity="0.7" />
+
+                    <circle
+                        cx="140"
+                        cy="140"
+                        r="9"
+                        fill="#f0ece0"
+                        stroke="#111111"
+                        stroke-width="2.5" />
+
+                    <circle
+                        cx="140"
+                        cy="140"
+                        r="3.5"
+                        fill="#111111" />
+
                 </svg>
+
             </div>
 
-            <!-- BLOCK COUNTER -->
             <div class="counter-block">
-                <div class="counter-eyebrow">Blocks Remaining Until Fork</div>
-                <div id="blocks-display" class="counter-number">—</div>
-                <div class="counter-unit">Bitcoin Blocks</div>
+
+                <div class="counter-eyebrow">
+                    BLOCKS REMAINING UNTIL FORK
+                </div>
+
+                <div class="counter-number" id="blocks-display">
+                    —
+                </div>
+
+                <div class="counter-unit">
+                    BITCOIN BLOCKS
+                </div>
+
             </div>
 
-            <!-- TIME ESTIMATE -->
             <div class="estimate-block">
-                <span class="estimate-label">Estimated Time Remaining</span>
-                <span id="time-string">Fetching block height…</span>
+
+                <span class="estimate-label">
+                    ESTIMATED TIME REMAINING
+                </span>
+
+                <div class="estimate-time" id="time-string">
+                    Fetching block height…
+                </div>
+
             </div>
 
-            <!-- PROGRESS -->
             <div class="progress-section">
+
                 <div class="progress-row">
-                    <span>Activation Progress</span>
-                    <span id="percent-text" class="pct">0%</span>
+                    <span>ACTIVATION PROGRESS</span>
+                    <span id="percent-text">0%</span>
                 </div>
+
                 <div class="track">
-                    <div id="doom-fill" class="fill" style="width:0%"></div>
+                    <div id="doom-fill"
+                        class="fill"
+                        style="width:0%">
+                    </div>
                 </div>
+
                 <div class="track-labels">
-                    <span>Block 840,000</span>
-                    <span>Target 961,632</span>
+                    <span>BLOCK 840,000</span>
+                    <span>TARGET 961,632</span>
                 </div>
+
             </div>
 
             <div class="footer">
-                <strong>This tool is 100% open source code.</strong><br>
+
+                <strong>
+                    This tool is 100% open source code.
+                </strong>
+
+                <br>
+
                 The Knotzi Death March Countdown can be found at
+
                 <a href="https://github.com/jlopp/knotzi-death-march"
-                    target="_blank">github.com/jlopp/knotzi-death-march</a>
-                and <a href="https://github.com/crrdlx/knots-march" target="_blank">github.com/crrdlx/knots-march</a>
+                    target="_blank">
+                    github.com/jlopp/knotzi-death-march
+                </a>
+
+                and
+
+                <a href="https://github.com/crrdlx/knots-march"
+                    target="_blank">
+                    github.com/crrdlx/knots-march
+                </a>
+
             </div>
 
         </div>
+
     </div>
 
     <script>
-        /* ── THEME TOGGLE ── */
+
         function toggleTheme() {
+
             const html = document.documentElement;
             const btn = document.getElementById('theme-btn');
+
             if (html.getAttribute('data-theme') === 'light') {
+
                 html.setAttribute('data-theme', 'dark');
-                btn.innerHTML = '☾ &nbsp;Dark';
+
+                btn.innerHTML = '☾ Dark';
+
             } else {
+
                 html.setAttribute('data-theme', 'light');
-                btn.innerHTML = '☀︎ &nbsp;Light';
+
+                btn.innerHTML = '☀︎ Light';
             }
         }
 
-        /* ── BUILD TICK MARKS ── */
+        /* build clock ticks */
         (function () {
+
             const g = document.getElementById('ticks');
-            const cx = 140, cy = 140;
+
+            const cx = 140;
+            const cy = 140;
+
             for (let i = 0; i < 60; i++) {
-                const isHour = (i % 5 === 0);
+
+                const isHour = i % 5 === 0;
+
                 const a = (i / 60) * 2 * Math.PI;
+
                 const outerR = 119;
                 const innerR = isHour ? 107 : 113;
+
                 const x1 = cx + Math.sin(a) * innerR;
                 const y1 = cy - Math.cos(a) * innerR;
+
                 const x2 = cx + Math.sin(a) * outerR;
                 const y2 = cy - Math.cos(a) * outerR;
-                const ln = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+
+                const ln = document.createElementNS(
+                    'http://www.w3.org/2000/svg',
+                    'line'
+                );
+
                 ln.setAttribute('x1', x1.toFixed(2));
                 ln.setAttribute('y1', y1.toFixed(2));
                 ln.setAttribute('x2', x2.toFixed(2));
                 ln.setAttribute('y2', y2.toFixed(2));
-                ln.setAttribute('stroke', '#333333');
-                ln.setAttribute('stroke-width', isHour ? '2.5' : '1');
+
+                ln.setAttribute('stroke', '#111111');
+
+                ln.setAttribute(
+                    'stroke-width',
+                    isHour ? '2.5' : '1'
+                );
+
                 g.appendChild(ln);
             }
+
         })();
 
-        /* ── CLOCK HANDS ── */
-        function setClockHands(pct) {
-            const cx = 140, cy = 140;
-            const p = Math.max(0, Math.min(1, pct));
-            // 288° = 11:48 (12 min to midnight), sweeps to 360° (midnight)
-            const minAngle  = (288 + p * 72) * Math.PI / 180;
-            // Hour hand: starts at 11:00 (352°), converges to 360° at fork
-            const hourAngle = (352 + p * 8) * Math.PI / 180;
+        /* sync text + analog clock */
+        function updateDoomClock(pct) {
 
-            function placeHand(tipId, tailId, rad, tipLen, tailLen) {
-                const s = Math.sin(rad), c = Math.cos(rad);
+            const cx = 140;
+            const cy = 140;
+
+            const p = Math.max(0, Math.min(1, pct));
+
+            /*
+                0%  = 12 minutes to midnight
+                100% = midnight
+            */
+
+            const remainingMinutes = 12 * (1 - p);
+
+            const displayedMinutes =
+                48 + (12 - remainingMinutes);
+
+            const minuteAngle =
+                (displayedMinutes * 6)
+                * Math.PI / 180;
+
+            const hourAngle =
+                (
+                    330 +
+                    (displayedMinutes / 60) * 30
+                )
+                * Math.PI / 180;
+
+            function placeHand(
+                tipId,
+                tailId,
+                rad,
+                tipLen,
+                tailLen
+            ) {
+
+                const s = Math.sin(rad);
+                const c = Math.cos(rad);
+
                 const tip = document.getElementById(tipId);
                 const tail = document.getElementById(tailId);
+
                 if (tip) {
-                    tip.setAttribute('x2', (cx + s * tipLen).toFixed(2));
-                    tip.setAttribute('y2', (cy - c * tipLen).toFixed(2));
+
+                    tip.setAttribute(
+                        'x2',
+                        (cx + s * tipLen).toFixed(2)
+                    );
+
+                    tip.setAttribute(
+                        'y2',
+                        (cy - c * tipLen).toFixed(2)
+                    );
                 }
+
                 if (tail) {
-                    tail.setAttribute('x2', (cx - s * tailLen).toFixed(2));
-                    tail.setAttribute('y2', (cy + c * tailLen).toFixed(2));
+
+                    tail.setAttribute(
+                        'x2',
+                        (cx - s * tailLen).toFixed(2)
+                    );
+
+                    tail.setAttribute(
+                        'y2',
+                        (cy + c * tailLen).toFixed(2)
+                    );
                 }
             }
 
-            placeHand('minute-hand', 'minute-tail', minAngle, 114, 28);
-            placeHand('hour-hand', 'hour-tail', hourAngle, 68, 18);
-            placeHand('red-line', 'red-tail', minAngle, 114, 28);
+            placeHand(
+                'minute-hand',
+                'minute-tail',
+                minuteAngle,
+                114,
+                28
+            );
+
+            placeHand(
+                'hour-hand',
+                'hour-tail',
+                hourAngle,
+                68,
+                18
+            );
+
+            placeHand(
+                'red-line',
+                'red-tail',
+                minuteAngle,
+                114,
+                28
+            );
+
+            /* headline text */
+
+            const mins = Math.floor(remainingMinutes);
+
+            const secs = Math.floor(
+                (remainingMinutes - mins) * 60
+            );
+
+            let text = '';
+
+            if (mins <= 0 && secs <= 0) {
+
+                text = 'MIDNIGHT';
+
+            } else if (mins === 0) {
+
+                text =
+                    `${secs} SECOND${secs !== 1 ? 'S' : ''}`;
+
+            } else {
+
+                text =
+                    `${mins} MINUTE${mins !== 1 ? 'S' : ''}`;
+
+                if (secs > 0) {
+
+                    text +=
+                        `, ${secs} SECOND${secs !== 1 ? 'S' : ''}`;
+                }
+            }
+
+            document.getElementById(
+                'doom-headline'
+            ).innerHTML =
+                `IT IS <em>${text}</em> TO MIDNIGHT`;
         }
 
-        /* ── FETCH + UPDATE ── */
         async function updateCountdown() {
+
             const TARGET = 961632;
             const START = 840000;
+
             const RANGE = TARGET - START;
 
             try {
-                const res = await fetch("https://mempool.space/api/blocks/tip/height");
+
+                const res = await fetch(
+                    "https://mempool.space/api/blocks/tip/height"
+                );
+
                 const height = parseInt(await res.text());
+
                 const remaining = TARGET - height;
 
                 if (remaining > 0) {
-                    const elapsed = height - START;
-                    const pct = Math.min(1, Math.max(0, elapsed / RANGE));
 
-                    document.getElementById('blocks-display').innerText = remaining.toLocaleString();
+                    const elapsed = height - START;
+
+                    const pct = Math.min(
+                        1,
+                        Math.max(0, elapsed / RANGE)
+                    );
+
+                    document.getElementById(
+                        'blocks-display'
+                    ).innerText =
+                        remaining.toLocaleString();
 
                     const totalMins = remaining * 10;
-                    const months = Math.floor(totalMins / 43200);
-                    const days = Math.floor((totalMins % 43200) / 1440);
-                    const hours = Math.floor((totalMins % 1440) / 60);
-                    const mins = totalMins % 60;
 
-                    // Build full actual time string for both til-value and time-string
+                    const months =
+                        Math.floor(totalMins / 43200);
+
+                    const days =
+                        Math.floor(
+                            (totalMins % 43200) / 1440
+                        );
+
+                    const hours =
+                        Math.floor(
+                            (totalMins % 1440) / 60
+                        );
+
+                    const mins =
+                        totalMins % 60;
+
                     const parts = [];
-                    if (months > 0) parts.push(months + (months === 1 ? ' month' : ' months'));
-                    if (days   > 0) parts.push(days   + (days   === 1 ? ' day'   : ' days'));
-                    if (hours  > 0) parts.push(hours  + (hours  === 1 ? ' hour'  : ' hours'));
-                    if (mins   > 0 && months === 0) parts.push(mins + ' minutes');
-                    const actualTime = parts.join(', ');
-                    document.getElementById('til-value').innerText  = actualTime;
-                    document.getElementById('time-string').innerText = actualTime;
 
-                    document.getElementById('doom-fill').style.width = (pct * 100).toFixed(1) + '%';
-                    document.getElementById('percent-text').innerText = Math.round(pct * 100) + '%';
+                    if (months > 0) {
+                        parts.push(
+                            months +
+                            (months === 1
+                                ? ' month'
+                                : ' months')
+                        );
+                    }
 
-                    setClockHands(pct);
+                    if (days > 0) {
+                        parts.push(
+                            days +
+                            (days === 1
+                                ? ' day'
+                                : ' days')
+                        );
+                    }
+
+                    if (hours > 0) {
+                        parts.push(
+                            hours +
+                            (hours === 1
+                                ? ' hour'
+                                : ' hours')
+                        );
+                    }
+
+                    if (mins > 0 && months === 0) {
+                        parts.push(
+                            mins + ' minutes'
+                        );
+                    }
+
+                    const actualTime =
+                        parts.join(', ');
+
+                    document.getElementById(
+                        'til-value'
+                    ).innerText =
+                        actualTime;
+
+                    document.getElementById(
+                        'time-string'
+                    ).innerText =
+                        actualTime;
+
+                    document.getElementById(
+                        'doom-fill'
+                    ).style.width =
+                        (pct * 100).toFixed(1) + '%';
+
+                    document.getElementById(
+                        'percent-text'
+                    ).innerText =
+                        (pct * 100).toFixed(1) + '%';
+
+                    updateDoomClock(pct);
 
                 } else {
-                    document.getElementById('blocks-display').innerText = '0';
-                    document.getElementById('til-value').innerText      = 'now — it has arrived';
-                    document.getElementById('time-string').innerText = 'The fork has occurred. Midnight.';
-                    document.getElementById('doom-fill').style.width = '100%';
-                    document.getElementById('percent-text').innerText = '100%';
-                    setClockHands(1);
+
+                    document.getElementById(
+                        'blocks-display'
+                    ).innerText = '0';
+
+                    document.getElementById(
+                        'til-value'
+                    ).innerText =
+                        'now — it has arrived';
+
+                    document.getElementById(
+                        'time-string'
+                    ).innerText =
+                        'The fork has occurred. Midnight.';
+
+                    document.getElementById(
+                        'doom-fill'
+                    ).style.width = '100%';
+
+                    document.getElementById(
+                        'percent-text'
+                    ).innerText = '100%';
+
+                    updateDoomClock(1);
                 }
+
             } catch (err) {
-                console.error('Fetch error:', err);
-                document.getElementById('time-string').innerText = 'Error fetching block height.';
+
+                console.error(err);
+
+                document.getElementById(
+                    'time-string'
+                ).innerText =
+                    'Error fetching block height.';
             }
         }
 
-        setClockHands(0);
-        updateCountdown();
-        setInterval(updateCountdown, 60000);
-    </script>
-</body>
+        updateDoomClock(0);
 
+        updateCountdown();
+
+        setInterval(updateCountdown, 60000);
+
+    </script>
+
+</body>
 </html>
