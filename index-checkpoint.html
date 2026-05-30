@@ -137,6 +137,13 @@
             margin-bottom: 1.25rem;
         }
 
+        .til-midnight-actual {
+            text-align: center;
+            color: var(--muted);
+            margin-bottom: 2rem;
+            font-size: 0.95rem;
+        }
+
         .clock-wrap {
             display: flex;
             justify-content: center;
@@ -443,23 +450,11 @@
                 TO THE BITCOIN FORK
             </div>
 
-
-
-            <div class="estimate-block">
-
-                <span class="estimate-label">
-                    ESTIMATED TIME REMAINING
-                </span>
-
-                <div class="estimate-time" id="time-string">
-                    Fetching block height…
-                </div>
-
-                <div id="til-date-bottom"
-                    style="margin-top:0.5rem; font-family:'Barlow Condensed',sans-serif; font-size:0.85rem; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:var(--til-em);">
-                </div>
-
+            <div class="til-midnight-actual">
+                Approximately <span id="til-value">—</span>
             </div>
+
+            <div class="estimated-date-line" id="til-date-top"></div>
 
             <div class="clock-wrap">
 
@@ -521,6 +516,22 @@
 
             </div>
 
+            <div class="estimate-block">
+
+                <span class="estimate-label">
+                    ESTIMATED TIME REMAINING
+                </span>
+
+                <div class="estimate-time" id="time-string">
+                    Fetching block height…
+                </div>
+
+                <div id="til-date-bottom"
+                    style="margin-top:0.5rem; font-family:'Barlow Condensed',sans-serif; font-size:0.78rem; font-weight:600; letter-spacing:0.14em; text-transform:uppercase; color:var(--muted);">
+                </div>
+
+            </div>
+
             <div class="progress-section">
 
                 <div class="progress-row">
@@ -576,7 +587,7 @@
                 <p>BIP-110 is a proposed soft fork of Bitcoin that would limit arbitrary data in transactions —
                     ostensibly to reduce "spam" and keep the network focused on monetary transfers. If it activates at
                     block 961,632, nodes running it will reject blocks that don't comply, potentially causing a
-                    <strong>chain split</strong>: two competing versions of Bitcoin.
+                    <strong>chain split</strong> or <strong>fork</strong>: two competing versions of Bitcoin.
                 </p>
 
                 <h3>What Happens at Block 961,632?</h3>
@@ -929,17 +940,23 @@
                         parts.join(', ');
 
                     document.getElementById(
+                        'til-value'
+                    ).innerText =
+                        actualTime;
+
+                    document.getElementById(
                         'time-string'
                     ).innerText =
                         actualTime;
 
                     // Estimated calendar date
                     const estDate = new Date(Date.now() + remaining * 10 * 60 * 1000);
-                    const dateStr = 'Estimated: ' + estDate.toLocaleString('en-US', {
+                    const dateStr = 'Est. ' + estDate.toLocaleString('en-US', {
                         month: 'long', day: 'numeric', year: 'numeric',
                         hour: '2-digit', minute: '2-digit',
                         timeZone: 'UTC', hour12: false
                     }) + ' UTC';
+                    document.getElementById('til-date-top').innerText = dateStr;
                     document.getElementById('til-date-bottom').innerText = dateStr;
 
                     document.getElementById(
